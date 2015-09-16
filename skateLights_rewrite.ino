@@ -12,28 +12,30 @@ typedef void (*colorModes)(uint32_t, uint8_t);
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, PIN, NEO_GRB + NEO_KHZ800);
 
-const uint32_t COLORS[13] = {strip.Color(0, 0, 0), strip.Color(255, 0, 0), strip.Color(255, 0, 255), strip.Color(128, 0, 255), 
-                                  strip.Color(0, 0, 255), strip.Color(0, 128, 255), strip.Color(0, 255, 255), 
-                                  strip.Color(0, 255, 128), strip.Color(0, 255, 128), strip.Color(0, 255, 0),
-                                  strip.Color(128, 255, 0), strip.Color(255, 255, 0), strip.Color(255, 128, 0)};
-                                  // BLACK, RED, MAGENTA, PURPLE, BLUE, CORNFLOWER, TURQUOISE, SEAFOAM, GREEN, LIME,
-                                  // YELLOW, ORANGE
+const uint32_t COLORS[13] = {strip.Color(0, 0, 0), strip.Color(255, 0, 0), strip.Color(255, 0, 255), 
+                             strip.Color(128, 0, 255), strip.Color(0, 0, 255), strip.Color(0, 128, 255), 
+                             strip.Color(0, 255, 255), strip.Color(0, 255, 128), strip.Color(0, 255, 128), 
+                             strip.Color(0, 255, 0), strip.Color(128, 255, 0), strip.Color(255, 255, 0), 
+                             strip.Color(255, 128, 0)};
+                             // BLACK, RED, MAGENTA, PURPLE, BLUE, CORNFLOWER, TURQUOISE, SEAFOAM, GREEN, LIME,
+                             // YELLOW, ORANGE
 
 
 colorModes modeArray[3] = {NULL, &rainbowCycle, &theaterChase}; 
 uint8_t buttons[] = {A2, A3}; 
+
 // we will track if a button is just pressed, just released, or 'currently pressed' 
 volatile byte pressed[NUMBUTTONS], justpressed[NUMBUTTONS], justreleased[NUMBUTTONS];
 
 
 
-volatile boolean ini = false;                                  // mode reset trigger, 0 if strip is waiting for a new color/mode, 
-                                                       // 1 if running.
-volatile uint8_t colorState = 0;                           // current color palette mode                          
-volatile uint8_t modeState = 0;                            // current cycling pattern mode
-boolean timerFlag = false;                             // false if timer based mode switching is off
-uint8_t led = 13;                                          // led pin to show timed switching mode enabled
-uint8_t timerState = 0;                                   // cycling mode while in timer based switching
+volatile boolean ini = false;              // mode reset trigger, 0 if strip is waiting for a new color/mode, 
+                                           // 1 if running.
+volatile uint8_t colorState = 0;           // current color palette mode                          
+volatile uint8_t modeState = 0;            // current cycling pattern mode
+boolean timerFlag = false;                 // false if timer based mode switching is off
+uint8_t led = 13;                          // led pin to show timed switching mode enabled
+uint8_t timerState = 0;                    // cycling mode while in timer based switching
 uint32_t lastTime = millis();
 uint8_t tmpColor = random(255);
 
